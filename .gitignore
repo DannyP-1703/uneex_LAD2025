@@ -1,1 +1,7 @@
 *.o
+*.a
+*.so
+*.out
+01_TerminalProject/Show
+02_Multifile/prog
+02_Multifile/prog-*
