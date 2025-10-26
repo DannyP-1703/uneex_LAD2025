@@ -2,9 +2,11 @@
 *.a
 *.so
 *.out
+*.tmp
 .vscode/
 01_TerminalProject/Show
 02_Multifile/prog
 02_Multifile/prog-*
 **/range
 **/esub
+**/move
