@@ -3,6 +3,8 @@
 *.so
 *.out
 *.tmp
+*.orig
+*.rej
 .vscode/
 01_TerminalProject/Show
 02_Multifile/prog

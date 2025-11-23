@@ -1,0 +1,42 @@
+--- maze.c	2025-11-23 15:41:56.068136015 +0300
++++ maze1.c	2025-11-23 15:40:36.021880831 +0300
+@@ -2,8 +2,11 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <time.h>
++#include <errno.h>
+ 
+ #define ERR_OOM 1
++#define ERR_USAGE 2
++#define ERR_VALUE 3
+ 
+ // up, down, left, right
+ int r_off[4] = {1, -1, 0, 0};
+@@ -80,10 +83,25 @@
+     }
+ }
+ 
+-int main(void) {
++int main(int argc, char **argv) {
+     srand((unsigned)time(NULL));
+ 
+-    size_t N = 6;
++    if (argc != 2) {
++        fprintf(stderr, "Usage: %s MAZE_SIZE\n", argv[0]);
++        return ERR_USAGE;
++    }
++
++    char *err;
++    errno = 0;
++    size_t N = strtoul(argv[1], &err, 10);
++    if (errno || err == argv[1]) {
++        fprintf(stderr, "Failed to convert %s to a number\n", argv[1]);
++        return ERR_VALUE;
++    }
++    if (N <= 0) {
++        fprintf(stderr, "Maze size should be positive\n");
++        return ERR_VALUE;
++    }
+     size_t SIZE = 2 * N + 1;
+ 
+     char **maze = init_maze(N, SIZE);

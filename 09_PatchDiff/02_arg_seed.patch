@@ -1,0 +1,46 @@
+--- maze2.c	2025-11-23 15:40:32.922832118 +0300
++++ maze3.c	2025-11-23 15:49:27.634137358 +0300
+@@ -85,25 +85,31 @@
+ }
+ 
+ int main(int argc, char **argv) {
+-    srand((unsigned)time(NULL));
+-
+-    if (argc != 3) {
+-        fprintf(stderr, "Usage: %s '<PASS_CHAR><WALL_CHAR>' MAZE_SIZE\n", argv[0]);
++    if (argc != 4) {
++        fprintf(stderr, "Usage: %s SEED '<PASS_CHAR><WALL_CHAR>' MAZE_SIZE\n", argv[0]);
+         return ERR_USAGE;
+     }
+ 
+-    if (strlen(argv[1]) != 2) {
+-        fprintf(stderr, "First argument should be a 2-character string, got '%s'\n", argv[1]);
++    char *err;
++    errno = 0;
++    unsigned seed = (unsigned)strtoul(argv[1], &err, 10);
++    if (errno || err == argv[1]) {
++        fprintf(stderr, "Failed to convert %s to a number\n", argv[1]);
+         return ERR_VALUE;
+     }
+-    PASS = argv[1][0];
+-    WALL = argv[1][1];
++    srand(seed);
++
++    if (strlen(argv[2]) != 2) {
++        fprintf(stderr, "Second argument should be a 2-character string, got '%s'\n", argv[2]);
++        return ERR_VALUE;
++    }
++    PASS = argv[2][0];
++    WALL = argv[2][1];
+ 
+-    char *err;
+     errno = 0;
+-    size_t N = strtoul(argv[2], &err, 10);
+-    if (errno || err == argv[2]) {
+-        fprintf(stderr, "Failed to convert %s to a number\n", argv[2]);
++    size_t N = strtoul(argv[3], &err, 10);
++    if (errno || err == argv[3]) {
++        fprintf(stderr, "Failed to convert %s to a number\n", argv[3]);
+         return ERR_VALUE;
+     }
+     if (N <= 0) {
