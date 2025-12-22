@@ -52,3 +52,9 @@ set -euo pipefail
 # Call uninstall target
 cmake --build build/ --target uninstall
 ```
+
+# Testing
+
+You can run unit-tests to verify `libroman-nums` correctness:
+
+> `cmake --build build/ --target test`
